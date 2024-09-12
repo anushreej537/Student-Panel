@@ -3,7 +3,7 @@ from . views import *
 from admin_panel.api.api import *
 
 urlpatterns = [
-    path("", signup,name='signup'),
+    path("",signup,name='signup'),
     path("create_user/", create_user,),
     path("login/",login,name='login'),
     path("login_user/",login_user,name='login_user'),
@@ -38,4 +38,3 @@ urlpatterns = [
     path('deletestudent/<int:id>/',DeleteStudentViewSet.as_view()),
     path('deletestu/<int:id>/',DestroyStudentViewSet.as_view())
 ]
-

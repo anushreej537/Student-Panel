@@ -33,4 +33,16 @@ def sdashboard(request):
 
 def viewtask(request,id):
     task = Teacher_task.objects.get(id=id)
-    return render(request,'sview.html',{'task':task})
+    stu_obj = Student.objects.all()
+    return render(request,'sview.html',{'task':task,'stu_obj':stu_obj})
+
+def updateview(request,id):
+    id = request.POST['id']
+    title = request.POST['title']
+    description = request.POST['description']
+    status = request.POST['status']
+    document = request.FILES['document']
+    id = request.POST['student']
+    student_id = Student.objects.get(id=id)
+    Teacher_task.objects.filter(id=id).update(title=title, description=description, status=status, document=document, student=student_id)
+    return redirect('/sdashboard/')
