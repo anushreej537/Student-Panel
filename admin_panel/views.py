@@ -94,6 +94,7 @@ def students(request):
         dueamount = request.POST['dueamount']
         course_id = request.POST['course']
         stu_course = Course.objects.get(id=course_id)
+        password = request.POST['password']
         if Student.objects.filter(email = email).exists():
             messages.error(request,'email already exist')
             return redirect('/studentdetails/')
@@ -106,7 +107,7 @@ def students(request):
             Student.objects.create(name=name , email=email, phonenum=phonenum, 
                                    address=address, degree=degree, college=college,
                                      totalamount=totalamount,paidamount=paidamount,
-                                     dueamount=dueamount,course=stu_course)
+                                     dueamount=dueamount,course=stu_course,password=password)
             return redirect('/studentdetails/')
     else:
         return render(request,'students.html')
@@ -164,14 +165,25 @@ def addteachers(request):
         email = request.POST['email']
         phonenum = request.POST['phonenum']
         course_id = request.POST['course']
+        password = request.POST['password']
+        
         teacher_course = Course.objects.get(id=course_id)
+        
+        # Check if the email or phone number already exists
         if Teacher.objects.filter(email=email).exists():
-            messages.error(request,'teacher email already exist')
+            messages.error(request, 'Teacher email already exists')
+            return render(request, 'teachers.html')  # Return the form with an error message
         elif Teacher.objects.filter(phonenum=phonenum).exists():
-            messages.error(request,'phonenum already exist')
+            messages.error(request, 'Phone number already exists')
+            return render(request, 'teachers.html')  # Return the form with an error message
         else:
-            Teacher.objects.create(name=name,email=email,phonenum=phonenum,course=teacher_course)
-            return redirect('/teachers/')
+            # Create the teacher and redirect to dashboard
+            Teacher.objects.create(name=name, email=email, phonenum=phonenum, course=teacher_course, password=password)
+            messages.success(request, 'Teacher added successfully')
+            return redirect('/teachers/')  # Redirect to the dashboard on success
+    
+    # If request method is GET or no post data, show the form page
+    return render(request, 'teachers.html')
 
 def update_teacher(request,id):
     teacher_data = Teacher.objects.get(id=id)

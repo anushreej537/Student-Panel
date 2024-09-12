@@ -22,7 +22,7 @@ class Course(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length = 250)
     email = models.EmailField(max_length = 250)
-    phonenum = models.IntegerField()
+    phonenum = models.BigIntegerField()
     address = models.CharField(max_length = 250)
     degree = models.CharField(max_length = 300)
     college = models.CharField(max_length = 250)
@@ -30,6 +30,7 @@ class Student(models.Model):
     paidamount = models.IntegerField()
     dueamount = models.FloatField()
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    password = models.CharField(max_length = 250)
 
     def __str__(self):
         return self.name
@@ -38,7 +39,8 @@ class Teacher(models.Model):
     name = models.CharField(max_length = 250)
     email = models.EmailField(max_length = 300)
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
-    phonenum = models.IntegerField()
+    phonenum = models.CharField(max_length=20)
+    password = models.CharField(max_length = 250,blank=True,null=True)
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
