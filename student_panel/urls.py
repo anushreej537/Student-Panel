@@ -6,5 +6,5 @@ urlpatterns = [
     path('sdashboard/',views.sdashboard, name='sdashboard'),
     path('slogin_user/',views.slogin_user,name='sloginuser'),
     path('viewtask/<int:id>/',views.viewtask,name='viewtask'),
-    path('updateview/<int:id>/',views.updateview),
+    path('updateview/',views.updateview),
 ]

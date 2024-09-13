@@ -13,7 +13,7 @@ def create_user(request):
         email = request.POST['email']
         password = request.POST['password']
         if User.objects.filter(email = email).exists():
-            return HttpResponse(request,'email already exist')
+            messages.error(request,'email already exist')
         else:
             User.objects.create(name=name, email=email, password=password)
             return render(request,'login.html')
@@ -30,7 +30,7 @@ def login_user(request):
             if User.objects.filter(password=password):
                 return redirect('/dashboard/')
             else:
-                return HttpResponse(request,'Wrong password')
+                messages.error(request,'Wrong password')
         else:
             return redirect('/')
     else:
@@ -42,7 +42,7 @@ def addcourse(request):
         fees = request.POST['fees']
         duration = request.POST['duration']
         if Course.objects.filter(course_name = course_name).exists():
-            return HttpResponse(request,'course name already exist')
+            messages.error(request,'course name already exist')
         else:
             Course.objects.create(course_name = course_name,fees = fees,duration = duration)
             messages.success(request,'course added successfully')

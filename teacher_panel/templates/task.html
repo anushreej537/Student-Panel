@@ -201,45 +201,52 @@
                     </tr>
                   </thead>
                   <tbody>
+                    {% for task in task_obj %}
             
                     <tr>
-                      {% for task in task_obj%}
                       <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="{% static '/img/small-logos/logo-asana.svg' %}" class="avatar avatar-sm me-3" alt="xd">
+                          <div class="d-flex px-2 py-1">
+                              <div>
+                                  <img src="{% static '/img/small-logos/logo-asana.svg' %}" class="avatar avatar-sm me-3" alt="xd">
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                  <!-- Button color changes based on task status -->
+                                  <a href="Courses_details.html" type="button"
+                                     class="btn {% if task.status == 'Complete' %}btn-success{% else %}btn-outline-primary{% endif %} btn-sm mb-0">
+                                     {{ task.title }}
+                                  </a>
+                              </div>
                           </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <a href="Courses_details.html" type="button"
-                              class="btn btn-outline-primary btn-sm mb-0">{{task.title}}</a>
-                          </div>
-                        </div>
                       </td>
                       <td class="align-middle text-sm">
-                        <span class="text-xs font-weight-bold">{{task.description}}</span>
+                          <span class="text-xs font-weight-bold">{{ task.description }}</span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        {% if task.status == "complete" %}
-                            <span class="text-xs font-weight-bold text-success">{{ task.status }}</span>
-                        {% else %}
-                            <span class="text-xs font-weight-bold text-danger">{{ task.status }}</span>
-                        {% endif %}
+                          {% if task.status == 'Complete' %}
+                              <!-- Status displayed with green color -->
+                              <span class="text-xs font-weight-bold text-success">Complete</span>
+                          {% else %}
+                              <!-- Status displayed with red color -->
+                              <span class="text-xs font-weight-bold text-danger">Incomplete</span>
+                          {% endif %}
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <a href="{{ task.document.url }}" class="text-xs font-weight-bold" download>
-                           Task file
-                      </a>
+                          <a href="{{ task.document.url }}" class="text-xs font-weight-bold" download>
+                              Task file
+                          </a>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold">{{task.student.name}}</span>
+                          <span class="text-xs font-weight-bold">{{ task.student.name }}</span>
                       </td>
-
-                      <td class="text-center text-sm"><a href='/updatetask/{{task.id}}/' class='btn btn-info'>Update Task</a></td>
-                      <td class="text-center text-sm"><a href='/deletetask/{{task.id}}/' class='btn btn-danger'>Delete Task</a></td>
-                    </tr>
-
-                    {% endfor %}
-                    
+                      <td class="text-center text-sm">
+                          <a href='/updatetask/{{ task.id }}/' class='btn btn-info'>Update Task</a>
+                      </td>
+                      <td class="text-center text-sm">
+                          <a href='/deletetask/{{ task.id }}/' class='btn btn-danger'>Delete Task</a>
+                      </td>
+                      {% endfor %}
+                  </tr>
+                  
                   </tbody>
                 </table>
               </div>

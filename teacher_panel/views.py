@@ -34,14 +34,20 @@ def addtask(request):
     if request.method == 'POST':
         title = request.POST['title']
         description = request.POST['description']
-        status = request.POST['status']
         document = request.FILES['document']
-        id = request.POST['student']
-        student_id = Student.objects.get(id=id)
-        Teacher_task.objects.create(title=title, description=description, status=status, document=document, student=student_id)
+        student_id = request.POST['student']
+        student = Student.objects.get(id=student_id)
+        Teacher_task.objects.create(
+            title=title, 
+            description=description, 
+            status='Incomplete',  # Default status
+            document=document, 
+            student=student
+        )
         return redirect('/alltask/')
     else:
-        pass
+        return render(request, 'task.html')
+
 
 
 def deletetask(request,id):
